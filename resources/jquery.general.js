@@ -20,11 +20,11 @@
 	$( document ).ready( function () {
 		try {
 			var pronunciationRecorder = new document.PronunciationRecorder();
-			$( ".mw-voiceintro-message" ).text( 'message:voiceintro-mic-access-notify' );
+			$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-mic-access-notify' ) );
 			$( ".mw-voiceintro-record" ).on( "click", function () {
 				$( ".mw-voiceintro-record" ).attr( 'disabled', 'disabled' );
 				$( ".mw-voiceintro-stop" ).removeAttr( 'disabled' );
-				$( ".mw-voiceintro-message" ).text( 'message:voiceintro-recording-notify' );
+				$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-recording-notify' ) );
 				pronunciationRecorder.startRecording();
 			} );
 			$( ".mw-voiceintro-stop" ).on( "click", function () {
@@ -56,17 +56,17 @@
 					$fileLink.attr( "href", 'blahblah' ); //mw.util.wikiGetlink( name ) );
 					$fileLink.text( name );
 					var $message = $( ".mw-voiceintro-message" );
-					$message.text( 'message:voiceintro-upload-publish-succeeded' );
+					$message.text( $.i18n( 'voiceintro-upload-publish-succeeded' ) );
 					$message.append( " " + $fileLink );
 				}, function () {
-					$( ".mw-voiceintro-message" ).text( 'message:voiceintro-upload-publish-failed' );
+					$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-upload-publish-failed' ) );
 				}, pronunciationRecorderFileDetails );
 			} );
 			$( ".mw-voiceintro-toolbar" ).show();
 		}
 		catch ( e ) {
 			console.log( e );
-			$( ".mw-voiceintro-message" ).text( 'message:voiceintro-webaudio-not-supported' );
+			$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-webaudio-not-supported' ) );
 		}
 	} );
 }( jQuery ) );

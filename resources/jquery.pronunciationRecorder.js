@@ -87,7 +87,7 @@
 						// this is the asynchronous callback that's called when exportWAV finishes encoding
 						function ( blob ) {
 							var message = $( '<br><audio controls class="mw-voiceintro-preview-audio"><source src="' + URL.createObjectURL( blob ) + '" type="audio/wav"></audio>' );
-							var upload = $( '<br><button class="mw-voiceintro-upload">' + 'message:voiceintro-toolbar-upload-label' + '</button>' );
+							var upload = $( '<br><button class="mw-voiceintro-upload">' + $.i18n('voiceintro-toolbar-upload-label') + '</button>' );
 							$( ".mw-voiceintro-preview-div" ).empty();
 							upload.prependTo( ".mw-voiceintro-preview-div" );
 							message.prependTo( ".mw-voiceintro-preview-div" );
