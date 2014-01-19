@@ -1,22 +1,26 @@
-PronunciationRecording is an extension for MediaWiki which provides a user-friendly interface to upload the pronunciation of a word.
+VoiceIntro is a project aimed at allow notable persons to record snippets of their own voice
 
-Currently it supports uploading a pronunciation to the current wiki, with a file description page in Wikimedia Commons' format.
+This tool is available under the GPLv2 license (for a copy of that license, see COPYING).
 
-However, it is planned to integrate with Wiktionary, so recordings can be made and added to definitions without leaving the page.  In the future this extension may be enhanced to support spoken articles too.
+VoiceIntro incorproates the RecorderJS library written originally by Matt Diamond with modifications by Chris Wilson.
+The RecorderJS library is under the MIT license, which is less restrictive than the GPLv2.
 
-The extension is available under the GPLv2 license (see COPYING).  See below for third-party libraries.
+For more information about the library visit https://github.com/mattdiamond/Recorderjs and/or https://github.com/cwilso/AudioRecorder.
 
-This extension uses RecorderJS library written originally by Matt Diamond with modifications by Chris Wilson. The RecorderJS library is under the MIT license. For more information about the library visit:
-https://github.com/mattdiamond/Recorderjs
+It also incorporates code from a early draft of the PronunciationRecording MediaWiki extension under the terms of the
+GPLv2 licence. Authors are listed below.
 
-For information about Chris Wilson's Audio Recorder visit:
-https://github.com/cwilso/AudioRecorder
+It also includes code from Muaz Khan's RecordRTC project <https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RecordRTC> under the terms of the MIT license, which is less restrictive than the GPLv2.
 
-Bug Report : https://bugzilla.wikimedia.org/show_bug.cgi?id=46610
+== Credits ==
+Under the terms of the GPLv2, the following authors must be credited:
+ * Harry Burt (VoiceIntro)
+ * Rahul Maliakkal (Extension:PronunciationRecording)
+ * Matthew Flaschen (Extension:PronunciationRecording)
+ * Michael Dale (Extension:PronunciationRecording)
 
-Authors:
-Rahul Maliakkal
-Matthew Flaschen
-Michael Dale
-
+It is also requested that reusers credit:
+ * Matt Diamond (RecorderJS)
+ * Chris Wilson (AudioRecorder)
+ * Muaz Khan (RecordRTC)
 

@@ -1,31 +1,30 @@
 /*
+ License (MIT)
 
-License (MIT)
+ Copyright © 2013 Matt Diamond
 
-Copyright © 2013 Matt Diamond
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+ the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
+ to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
-to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+ the Software.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of
-the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-*/
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+ THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ DEALINGS IN THE SOFTWARE.
+ */
 
 var recLength = 0,
-recBuffersL = [],
-recBuffersR = [],
-sampleRate;
+	recBuffersL = [],
+	recBuffersR = [],
+	sampleRate;
 
-this.onmessage = function( e ) {
-	switch( e.data.command ) {
+this.onmessage = function ( e ) {
+	switch ( e.data.command ) {
 		case 'init':
 			init( e.data.config );
 			break;
@@ -100,7 +99,7 @@ function interleave( inputL, inputR ) {
 	var length = inputL.length + inputR.length;
 	var result = new Float32Array( length );
 	var index = 0,
-	inputIndex = 0;
+		inputIndex = 0;
 
 	while ( index < length ) {
 		result[index++] = inputL[inputIndex];
@@ -111,7 +110,7 @@ function interleave( inputL, inputR ) {
 }
 
 function floatTo16BitPCM( output, offset, input ) {
-	for ( var i = 0; i < input.length; i++, offset+=2 ) {
+	for ( var i = 0; i < input.length; i++, offset += 2 ) {
 		var s = Math.max( -1, Math.min( 1, input[i] ) );
 		output.setInt16( offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true );
 	}
@@ -140,7 +139,7 @@ function encodeWAV( samples, mono ) {
 	/* sample format (raw) */
 	view.setUint16( 20, 1, true );
 	/* channel count */
-	view.setUint16( 22, mono?1:2, true );
+	view.setUint16( 22, mono ? 1 : 2, true );
 	/* sample rate */
 	view.setUint32( 24, sampleRate, true );
 	/* byte rate (sample rate * block align) */
