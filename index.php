@@ -72,7 +72,7 @@
 
 	<script type="text/javascript" src="resources/jquery.i18n.js.php?userlang=<?= $I18N->getLang() ?>"></script>
 	<script type="text/javascript" src="resources/jquery.fileDetails.js"></script>
-	<script type="text/javascript" src="resources/jquery.pronunciationRecorder.js"></script>
+	<script type="text/javascript" src="resources/jquery.audioRecorder.js"></script>
 	<script type="text/javascript" src="resources/jquery.general.js"></script>
 	<script type="text/javascript" src="resources/recorder.js"></script>
 <?php

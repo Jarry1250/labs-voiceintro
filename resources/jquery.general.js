@@ -19,20 +19,20 @@
 ( function ( $ ) {
 	$( document ).ready( function () {
 		try {
-			var pronunciationRecorder = new document.PronunciationRecorder();
+			var audioRecorder = new document.audioRecorder();
 			$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-mic-access-notify' ) );
 			$( ".mw-voiceintro-record" ).on( "click", function () {
 				$( ".mw-voiceintro-record" ).attr( 'disabled', 'disabled' );
 				$( ".mw-voiceintro-stop" ).removeAttr( 'disabled' );
 				$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-recording-notify' ) );
-				pronunciationRecorder.startRecording();
+				audioRecorder.startRecording();
 			} );
 			$( ".mw-voiceintro-stop" ).on( "click", function () {
 				$( ".mw-voiceintro-message" ).empty();
 				$( ".mw-voiceintro-stop" ).attr( 'disabled', 'disabled' );
 				$( ".mw-voiceintro-clear" ).removeAttr( 'disabled' );
-				pronunciationRecorder.stopRecording();
-				pronunciationRecorder.createSource( function () {
+				audioRecorder.stopRecording();
+				audioRecorder.createSource( function () {
 				} );
 			} );
 			$( ".mw-voiceintro-clear" ).on( "click", function () {
@@ -42,16 +42,16 @@
 				$( ".mw-voiceintro-message" ).empty();
 			} );
 			$( document ).on( "click", ".mw-voiceintro-upload", function () {
-				var pronunciationRecorderFileDetails, speaker, username, lang_code;
+				var audioRecorderFileDetails, speaker, username, lang_code;
 				speaker = $( ".mw-voiceintro-information-speaker" ).val();
 				lang_code = $( ".mw-voiceintro-information-language" ).val();
 				username = '{{subst:REVISIONUSER}}';
-				pronunciationRecorderFileDetails = new document.PronunciationRecorderFileDetails( speaker, username, lang_code );
+				audioRecorderFileDetails = new document.audioRecorderFileDetails( speaker, username, lang_code );
 				$( ".mw-voiceintro-upload" ).attr( 'disabled', 'disabled' );
-				pronunciationRecorder.startUploading( function () {
+				audioRecorder.startUploading( function () {
 					console.log( 'Upload complete' );
 					var name, $fileLink;
-					name = 'File:' + pronunciationRecorderFileDetails.generateFileName();
+					name = 'File:' + audioRecorderFileDetails.generateFileName();
 					$fileLink = $( '<a>' );
 					$fileLink.attr( "href", 'http://test.wikipedia.org/wiki/' + name );
 					$fileLink.text( name );
@@ -60,7 +60,7 @@
 					$message.append( " " + $fileLink );
 				}, function () {
 					$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-upload-publish-failed' ) );
-				}, pronunciationRecorderFileDetails );
+				}, audioRecorderFileDetails );
 			} );
 			$( ".mw-voiceintro-toolbar" ).show();
 		}

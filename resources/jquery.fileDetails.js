@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 ( function ( $ ) {
-	document.PronunciationRecorderFileDetails = function ( speaker, username, lang_code ) {
+	document.audioRecorderFileDetails = function ( speaker, username, lang_code ) {
 		var description, date_obj, fulldate, source, author, permission, category, lang_subst = "{{subst:#language:" + lang_code + "|en}}";
 		date_obj = new Date();
 		description = "Audio snippet of " + speaker + " in " + lang_subst;
