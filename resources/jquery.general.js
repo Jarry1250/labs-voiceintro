@@ -42,18 +42,18 @@
 				$( ".mw-voiceintro-message" ).empty();
 			} );
 			$( document ).on( "click", ".mw-voiceintro-upload", function () {
-				var pronunciationRecorderFileDetails, word, username, lang_code;
-				word = $( ".mw-voiceintro-information-name" ).val();
+				var pronunciationRecorderFileDetails, speaker, username, lang_code;
+				speaker = $( ".mw-voiceintro-information-speaker" ).val();
 				lang_code = $( ".mw-voiceintro-information-language" ).val();
 				username = '{{subst:REVISIONUSER}}';
-				pronunciationRecorderFileDetails = new document.PronunciationRecorderFileDetails( word, username, lang_code );
+				pronunciationRecorderFileDetails = new document.PronunciationRecorderFileDetails( speaker, username, lang_code );
 				$( ".mw-voiceintro-upload" ).attr( 'disabled', 'disabled' );
 				pronunciationRecorder.startUploading( function () {
 					console.log( 'Upload complete' );
 					var name, $fileLink;
 					name = 'File:' + pronunciationRecorderFileDetails.generateFileName();
 					$fileLink = $( '<a>' );
-					$fileLink.attr( "href", 'blahblah' ); //mw.util.wikiGetlink( name ) );
+					$fileLink.attr( "href", 'http://test.wikipedia.org/wiki/' + name );
 					$fileLink.text( name );
 					var $message = $( ".mw-voiceintro-message" );
 					$message.text( $.i18n( 'voiceintro-upload-publish-succeeded' ) );
