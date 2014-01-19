@@ -46,20 +46,23 @@
 	<form>
 		<fieldset>
 			<legend><?= _html( 'voiceintro-information-label', 'voiceintro' ) ?></legend>
-			<b><?= _html( 'voiceintro-information-speaker-label', 'voiceintro' ) ?></b><input type="text" class="mw-voiceintro-information-speaker"><br><br>
-			<b><?= _html( 'voiceintro-information-language-label', 'voiceintro' ) ?></b><select class="mw-voiceintro-information-language">
+			<label for="mw-voiceintro-information-speaker"><?= _html( 'voiceintro-information-speaker-label', 'voiceintro' ) ?></label><input type="text" class="mw-voiceintro-information-speaker" name="mw-voiceintro-information-speaker"><br><br>
+			<label for="mw-voiceintro-information-language"><?= _html( 'voiceintro-information-language-label', 'voiceintro' ) ?></label><select class="mw-voiceintro-information-language" name="mw-voiceintro-information-language">
 				<?php
-					$languages = $I18N->getLangNames();//array( 'en' => 'English' );
-					foreach( $languages as $lang_code => $lang_name) {
-						echo '<option value="' . $lang_code . '">' . $lang_code.' - '.$lang_name  . '</option>';
+					$languages = $I18N->getLangNames();
+					$default = $I18N->getLang();
+					foreach( $languages as $langCode => $langName ) {
+						$selected = ( $langCode === $default ) ? ' selected="selected"' : '';
+						echo '<option value="' . $langCode . '"' . $selected . '>' . $langCode . ' - ' . $langName  . '</option>';
 					}
 				?>
 			</select>
 			<br /><br />
-			<div class="mw-voiceintro-information-license-cc-by-sa" >
+			<div class="mw-voiceintro-information-license-cc-by-sa">
+				<p>Some helpful text here.</p>
 				<?php
 					//.  _html( 'voiceintro-information-license-prompt:$user', 'voiceintro' );
-					echo 'message:mwe-upwiz-source-ownwork-assert-cc-by-sa-3.0:1:$user:http://creativecommons.org/licenses/by-sa/3.0/deed.en' . '<br>';
+					// echo 'message:mwe-upwiz-source-ownwork-assert-cc-by-sa-3.0:1:$user:http://creativecommons.org/licenses/by-sa/3.0/deed.en' . '<br>';
 					//_html( 'mwe-upwiz-source-ownwork-cc-by-sa-3.0-explain:1', 'voiceintro' )
 				?>
 				<br/>
