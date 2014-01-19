@@ -19,8 +19,7 @@
 ( function ( $ ) {
 	document.PronunciationRecorder = function () {
 
-		var audioContext, recorder, uploadHandler, uploadWizardUpload, cachedBlob,
-			userAgent = 'Wikimedia labs/voiceintro project';
+		var audioContext, recorder, cachedBlob;
 
 		function startUserMedia( stream ) {
 			$( ".mw-voiceintro-record" ).removeAttr( 'disabled' );
