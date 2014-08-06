@@ -19,22 +19,9 @@
 	 */
 
 	require_once( '/data/project/jarry-common/public_html/global.php' );
-	require_once( '/data/project/jarry-common/public_html/OAuthHandler.php' );
 	require_once( '/data/project/voiceintro/OAuthConfig.php' );
 
 	echo get_html( 'header', 'VoiceIntro' );
-
-	// Details from OAuthConfig.php
-	$oAuth = new OAuthHandler( $details );
-
-	// Fetch the access token if this is the callback from requesting authorization
-	if ( isset( $_GET['oauth_verifier'] ) && $_GET['oauth_verifier'] ) {
-		$oAuth->fetchAccessToken();
-		header( 'Location: ' . $_SERVER['PHP_SELF'] );
-	}
-
-	// $username is fakeable using a MITM under OAuth Connect goes live
-	$username = $oAuth->authorizeMe();
 ?>
 	<div class="mw-voiceintro-message">Hello <?=$username ?></div>
 		<div class="mw-voiceintro-toolbar">

@@ -18,13 +18,6 @@
 	 * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 	 */
 
-	// Ensure we are authorised by this point
-	require_once( '/data/project/jarry-common/public_html/OAuthHandler.php' );
-	require_once( '/data/project/voiceintro/OAuthConfig.php' );
-	global $details; // $details from OAuthConfig.php
-	$oAuth = new OAuthHandler( $details );
-	$username = $oAuth->authorizeMe();
-
 	if( !isset( $_FILES["audio-blob"] ) ) die( "An error occurred." );
 	if( !isset( $_POST["audio-filename"] ) ) die( "An error occurred." );
 	if( !isset( $_POST["audio-description"] ) ) die( "An error occurred." );
@@ -32,33 +25,22 @@
 	$fileName = $_POST["audio-filename"];
 	$fileDescription = $_POST['audio-description'];
 	$oggName = substr( $_POST["audio-filename"], 0, -3 ) . 'ogg';
-	$uploadDirectory = '/data/project/voiceintro/public_html/uploads/' . $fileName;
+	$uploadPath = '/data/project/voiceintro/public_html/uploads/' . $fileName;
 
-	if( !move_uploaded_file( $_FILES["audio-blob"]["tmp_name"], $uploadDirectory ) ){
-		die( "An error occurred. Problem moving uploaded file from {$_FILES["audio-blob"]["tmp_name"]} to $uploadDirectory" );
+	if( !move_uploaded_file( $_FILES["audio-blob"]["tmp_name"], $uploadPath ) ){
+		die( "An error occurred. Problem moving uploaded file from {$_FILES["audio-blob"]["tmp_name"]} to $uploadPath" );
 	}
 
 	// Transcode to .ogg
-	$oggDirectory = substr( $uploadDirectory, 0, -3 ) . 'ogg';
-	exec( 'rm "' . $oggDirectory . '"' );
-	exec( '/usr/bin/avconv -i "' . $uploadDirectory . '" -c:a libvorbis -qscale 100 "' . $oggDirectory . '"' );
+	$oggPath = substr( $uploadPath, 0, -3 ) . 'ogg';
+	exec( 'rm "' . $oggPath . '"' );
+	exec( '/usr/bin/avconv -i "' . $uploadPath . '" -c:a libvorbis -qscale 100 "' . $oggPath . '"' );
 
-	// And do upload
-	$res = $oAuth->doApiQuery( array(
-		'action' => 'tokens',
-		'type' => 'edit',
-	), $ch );
+	// Send email
+	$url = "File:\nhttp://tools.wmflabs.org/voiceintro/uploads/" . $oggName;
+	$description = "$url\n\nSuggested description:\n$fileDescription";
+	mail( 'harryaburt@gmail.com', 'New VoiceIntro submission', $description );
 
-	if ( !isset( $res->tokens->edittoken ) ) die( "An error occurred." );
-	$token = $res->tokens->edittoken;
-	$oAuth->doApiQuery( array(
-		'action' => 'upload',
-		'filename' => $oggName,
-		'token' => $token,
-		'file' => "@/$oggDirectory;type=audio/ogg",
-		'comment' => 'Upload audio snipped using VoiceIntro tool',
-		'text' => $fileDescription,
-		'ignorewarnings' => 1
-	), array(
-		//'Content-Disposition: form-data; filename=' . $oggName
-	) );
+
+//
+
