@@ -19,8 +19,8 @@
 ( function ( $ ) {
 	$( document ).ready( function () {
 		try {
-			var audioRecorder = new document.audioRecorder();
-			$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-mic-access-notify' ) );
+			var audioRecorder = new document.AudioRecorder();
+			$( ".mw-voiceintro-message" ).html( $.i18n( 'voiceintro-mic-access-notify' ) );
 			$( ".mw-voiceintro-record" ).on( "click", function () {
 				$( ".mw-voiceintro-record" ).attr( 'disabled', 'disabled' );
 				$( ".mw-voiceintro-stop" ).removeAttr( 'disabled' );
@@ -32,8 +32,7 @@
 				$( ".mw-voiceintro-stop" ).attr( 'disabled', 'disabled' );
 				$( ".mw-voiceintro-clear" ).removeAttr( 'disabled' );
 				audioRecorder.stopRecording();
-				audioRecorder.createSource( function () {
-				} );
+				audioRecorder.showPreview();
 			} );
 			$( ".mw-voiceintro-clear" ).on( "click", function () {
 				$( ".mw-voiceintro-record" ).removeAttr( 'disabled' );
@@ -42,22 +41,23 @@
 				$( ".mw-voiceintro-message" ).empty();
 			} );
 			$( document ).on( "click", ".mw-voiceintro-upload", function () {
-				var audioRecorderFileDetails, speaker, username, lang_code;
+				var audioRecorderFileDetails, speaker, article, lang_code;
 				speaker = $( ".mw-voiceintro-information-speaker" ).val();
 				lang_code = $( ".mw-voiceintro-information-language" ).val();
-				username = '{{subst:REVISIONUSER}}';
-				audioRecorderFileDetails = new document.audioRecorderFileDetails( speaker, username, lang_code );
+				article = $( ".mw-voiceintro-information-article" ).val();
+				audioRecorderFileDetails = new document.AudioRecorderFileDetails( speaker, article, lang_code );
 				$( ".mw-voiceintro-upload" ).attr( 'disabled', 'disabled' );
 				audioRecorder.startUploading( function () {
-					console.log( 'Upload complete' );
+					console.log( 'Email sent' );
 					var name, $fileLink;
-					name = 'File:' + audioRecorderFileDetails.generateFileName();
+					name = audioRecorderFileDetails.generateFileName().replace( '.wav', '.ogg' );
 					$fileLink = $( '<a>' );
-					$fileLink.attr( "href", 'http://test.wikipedia.org/wiki/' + name );
+					$fileLink.attr( "href", 'http://tools.wmflabs.org/voiceintro/uploads/' + name );
 					$fileLink.text( name );
 					var $message = $( ".mw-voiceintro-message" );
 					$message.text( $.i18n( 'voiceintro-upload-publish-succeeded' ) );
-					$message.append( " " + $fileLink );
+					$message.append( " " );
+					$message.append( $fileLink );
 				}, function () {
 					$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-upload-publish-failed' ) );
 				}, audioRecorderFileDetails );

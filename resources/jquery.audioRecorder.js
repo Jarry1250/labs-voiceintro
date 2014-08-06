@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 ( function ( $ ) {
-	document.audioRecorder = function () {
+	document.AudioRecorder = function () {
 
 		var audioContext, recorder, cachedBlob;
 
 		function startUserMedia( stream ) {
 			$( ".mw-voiceintro-record" ).removeAttr( 'disabled' );
-			$( ".mw-voiceintro-message" ).empty();
+			$( ".mw-voiceintro-message" ).text( $.i18n( 'voiceintro-information-instructions' ) );
 			var input = audioContext.createMediaStreamSource( stream );
 			console.log( 'Media Stream created' );
 			recorder = new Recorder( input );
@@ -31,7 +31,7 @@
 		}
 
 		function getBlob( callback ) {
-			if ( cachedBlob ) {
+			if ( cachedBlob !== null ) {
 				callback( cachedBlob );
 			}
 			else {
@@ -81,16 +81,30 @@
 				recorder.stop();
 			},
 
-			createSource: function ( callback ) {
+			showPreview: function () {
 				if ( recorder ) {
 					getBlob(
 						// this is the asynchronous callback that's called when exportWAV finishes encoding
 						function ( blob ) {
-							var message = $( '<br><audio controls class="mw-voiceintro-preview-audio"><source src="' + URL.createObjectURL( blob ) + '" type="audio/wav"></audio>' );
-							var upload = $( '<br><button class="mw-voiceintro-upload">' + $.i18n('voiceintro-toolbar-upload-label') + '</button>' );
+							var $message = $( '<br><audio controls class="mw-voiceintro-preview-audio"><source src="' + URL.createObjectURL( blob ) + '" type="audio/wav"></audio>' ),
+								$upload = $( '<br><button class="mw-voiceintro-upload">' + $.i18n('voiceintro-toolbar-upload-label') + '</button>' ),
+								$agree = $( '#agree' );
 							$( ".mw-voiceintro-preview-div" ).empty();
-							upload.prependTo( ".mw-voiceintro-preview-div" );
-							message.prependTo( ".mw-voiceintro-preview-div" );
+							$upload.prependTo( ".mw-voiceintro-toolbar" );
+							$message.prependTo( ".mw-voiceintro-preview-div" );
+							if( !$agree.is( ':checked' ) ) {
+								$( '.mw-voiceintro-upload' ).attr( 'disabled', 'disabled' );
+							}
+							var checkUploadConditions = function() {
+								if( $agree.is(':checked') && $( '.mw-voiceintro-information-speaker' ).val().length > 0 ) {
+									$( '.mw-voiceintro-upload' ).attr( 'disabled', null );
+								} else {
+									$( '.mw-voiceintro-upload' ).attr( 'disabled', 'disabled' );
+									$( ".mw-voiceintro-message" ).html( $.i18n( 'voiceintro-error-incomplete' ) );
+								}
+							};
+							$agree.change( checkUploadConditions );
+							$( '.mw-voiceintro-information-speaker' ).change( checkUploadConditions );
 						}
 					);
 				}

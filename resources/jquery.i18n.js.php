@@ -18,7 +18,7 @@
  */
 <?php
 	header( 'Content-type: application/javascript; charset=utf-8' );
-	require_once( '/data/project/jarry-common/public_html/i18n.php' );
+	require_once( '/data/project/jarry-common/public_html/libs/i18n.php' );
 	$I18N->loadTextdomain( 'voiceintro' );
 	$messageKeys = $I18N->listMsgs( 'voiceintro' );
 	$messages = array_flip( $messageKeys );

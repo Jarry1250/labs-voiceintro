@@ -23,17 +23,19 @@
 
 	echo get_html( 'header', 'VoiceIntro' );
 ?>
-	<div class="mw-voiceintro-message">Hello <?=$username ?></div>
-		<div class="mw-voiceintro-toolbar">
-			<button class="mw-voiceintro-record" disabled ><?= _html( 'voiceintro-toolbar-record-label', 'voiceintro' ) ?></button>
-			<button class="mw-voiceintro-stop" disabled ><?= _html( 'voiceintro-toolbar-stop-label', 'voiceintro' ) ?></button>
-			<button class="mw-voiceintro-clear" disabled ><?= _html( 'voiceintro-toolbar-clear-label', 'voiceintro' ) ?></button>
-		<div class="mw-voiceintro-preview-div" ></div>
+
+	<div class="mw-voiceintro-message"></div><br />
+	<div class="mw-voiceintro-toolbar">
+		<button class="mw-voiceintro-record" disabled><?= _html( 'voiceintro-toolbar-record-label', 'voiceintro' ) ?></button>
+		<button class="mw-voiceintro-stop" disabled><?= _html( 'voiceintro-toolbar-stop-label', 'voiceintro' ) ?></button>
+		<button class="mw-voiceintro-clear" disabled><?= _html( 'voiceintro-toolbar-clear-label', 'voiceintro' ) ?></button>
+		<div class="mw-voiceintro-preview-div"></div>
 	</div>
 	<form>
 		<fieldset>
 			<legend><?= _html( 'voiceintro-information-label', 'voiceintro' ) ?></legend>
-			<label for="mw-voiceintro-information-speaker"><?= _html( 'voiceintro-information-speaker-label', 'voiceintro' ) ?></label><input type="text" class="mw-voiceintro-information-speaker" name="mw-voiceintro-information-speaker"><br><br>
+			<label for="mw-voiceintro-information-speaker"><?= _html( 'voiceintro-information-speaker-label', 'voiceintro' ) ?></label><input type="text" class="mw-voiceintro-information-speaker" name="mw-voiceintro-information-speaker" required="required"><br><br>
+			<label for="mw-voiceintro-information-article"><?= _html( 'voiceintro-information-article-label', 'voiceintro' ) ?></label><input type="text" class="mw-voiceintro-information-article" name="mw-voiceintro-information-article"><br><br>
 			<label for="mw-voiceintro-information-language"><?= _html( 'voiceintro-information-language-label', 'voiceintro' ) ?></label><select class="mw-voiceintro-information-language" name="mw-voiceintro-information-language">
 				<?php
 					$languages = $I18N->getLangNames();
@@ -45,15 +47,9 @@
 				?>
 			</select>
 			<br /><br />
-			<div class="mw-voiceintro-information-license-cc-by-sa">
-				<p>Some helpful text here.</p>
-				<?php
-					//.  _html( 'voiceintro-information-license-prompt:$user', 'voiceintro' );
-					// echo 'message:mwe-upwiz-source-ownwork-assert-cc-by-sa-3.0:1:$user:http://creativecommons.org/licenses/by-sa/3.0/deed.en' . '<br>';
-					//_html( 'mwe-upwiz-source-ownwork-cc-by-sa-3.0-explain:1', 'voiceintro' )
-				?>
-				<br/>
-			</div>';
+			<div class="mw-voiceintro-information-license">
+				<input type="checkbox" id="agree" name="agree" value="agree" /><label for="agree"><?=	_html( 'voiceintro-information-license-warning', 'voiceintro' ); ?></label>
+			</div>
 		</fieldset>
 	</form>
 

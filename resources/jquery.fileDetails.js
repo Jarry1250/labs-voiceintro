@@ -17,10 +17,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 ( function ( $ ) {
-	document.audioRecorderFileDetails = function ( speaker, username, lang_code ) {
+	document.AudioRecorderFileDetails = function ( speaker, article, lang_code ) {
 		var description, date_obj, fulldate, source, author, permission, category, lang_subst = "{{subst:#language:" + lang_code + "|en}}";
 		date_obj = new Date();
-		description = "Audio snippet of " + speaker + " in " + lang_subst;
+
+		if( article != '' ) speaker = '[[' + article + '|' + speaker + ']]';
+		description = "{{en|Audio snippet of " + speaker + " in " + lang_subst + '.}}';
 
 		function pad( param ) {
 			if ( param < 10 ) {
@@ -32,16 +34,18 @@
 
 		fulldate = date_obj.getFullYear() + "-" + pad( date_obj.getMonth() + 1 ) + "-" + pad( date_obj.getDate() );
 		source = '{{Created with VoiceIntro}}';
-		author = '[[User:' + username + '|' + username + ']]';
-		permission = '{{Cc-by-sa-3.0}}';
+		author = speaker;
+		permission = '{{Cc-by-sa-3.0}}{{PermissionOTRS|id=number or ticket=URL}}';
 
 		return {
 			generateWikiText: function () {
-				return '{{Information\n |description = ' + description + '\n |date = ' + fulldate + '\n |source = ' + source + '\n |author = ' + author + '\n |permission = ' + permission + '\n}}\n' + category;
+				return '{{Information\n |description = ' + description + '\n |date = ' + fulldate + '\n |source = ' + source + '\n |author = ' + author + '\n |permission = ' + permission + '\n}}';
 			},
 
 			generateFileName: function () {
-				return speaker + '_(' + lang_code + ' VoiceIntro).wav';
+				var name = speaker + ' (' + lang_code + ' VoiceIntro).wav';
+				name = name.replace( / /g, '_' );
+				return name;
 			}
 		}
 	}
